@@ -3,12 +3,13 @@ import videoIcon from "../assets/home-icon/video-icon.svg";
 import avatar from "../assets/home-icon/avatar-header.png";
 import search from "../assets/home-icon/search.svg";
 import dropdownArrow from "../assets/home-icon/dropdown-arrow.svg";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ProfileDropdown from "./profile-dropdown";
 import { AnimatePresence, motion } from "motion/react";
 
 export default function Header() {
   const [isShowProfileDropdown, setIsShowProfileDropdown] = useState(false);
+  const avatarRef = useRef<HTMLDivElement>(null);
   return (
     <div className="bg-white flex justify-between items-center p-3 lg:px-28 lg:justify-around">
       <div className="text-3xl font-bold lg:text-4xl">Aatroxx.in</div>
@@ -30,6 +31,7 @@ export default function Header() {
         </div>
         <div className="relative">
           <div
+            ref={avatarRef}
             className="relative w-10 h-10 rounded-full bg-[#F0F3F6] flex justify-center items-center lg:w-12 lg:h-12 cursor-pointer"
             onClick={() => {
               setIsShowProfileDropdown(!isShowProfileDropdown);
@@ -44,13 +46,14 @@ export default function Header() {
               <img src={dropdownArrow} alt="" />
             </div>
           </div>
-          <AnimatePresence>
+          <AnimatePresence> 
             {isShowProfileDropdown && (
               <motion.div key="modal" transition={{ duration: 0.2, ease: "linear" }} initial={{ opacity: 0 }} animate={{opacity: 1}} exit={{ opacity: 0 }}>
                 {
                   <ProfileDropdown
                     isShowProfileDropdown={isShowProfileDropdown}
                     setIsShowProfileDropdown={setIsShowProfileDropdown}
+                    avatarRef={avatarRef}
                   />
                 }
               </motion.div>

@@ -3,8 +3,15 @@ import googleSvg from "../assets/google.svg";
 import facebookSvg from "../assets/facebook.svg";
 import eye from "../assets/eye-login.svg";
 import air from "../assets/air-plane.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+  
+  const handleLogin = () => {
+    navigate("/home");
+  }
+
   return (
     <div className="flex justify-center h-screen font-Nunito bg-login-bg bg-cover bg-center lg:bg-none">
       <div className="hidden lg:block w-1/2 bg-login-bg bg-cover bg-center py-28 pl-52 space-y-12">
@@ -65,7 +72,8 @@ export default function Login() {
               </div>
             </div>
             <div className="pt-2">
-              <button className="w-full min-h-10 bg-[#1B53F4] text-white rounded-2xl font-semibold text-lg p-3 shadow-custom">
+              <button className="w-full min-h-10 bg-[#1B53F4] text-white rounded-2xl font-semibold text-lg p-3 shadow-custom"
+              onClick={handleLogin}>
                 Login
               </button>
             </div>

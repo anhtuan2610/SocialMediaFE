@@ -9,11 +9,13 @@ import { useEffect, useRef } from "react";
 type TProps = {
   isShowProfileDropdown: boolean;
   setIsShowProfileDropdown: React.Dispatch<React.SetStateAction<boolean>>;
+  avatarRef: React.RefObject<HTMLDivElement>;
 };
 
 export default function ProfileDropdown({
   isShowProfileDropdown,
   setIsShowProfileDropdown,
+  avatarRef,
 }: TProps) {
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -21,12 +23,11 @@ export default function ProfileDropdown({
     navigate("/login");
   };
   const handleClickOutside = (event: MouseEvent) => {
-    // console.log(event);
-    // console.log(dropdownRef.current);
-    
     if (
       dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node) // phần tử được click không nằm trong cái dropdown
+      !dropdownRef.current.contains(event.target as Node) && // phần tử được click không nằm trong cái dropdown
+      avatarRef.current &&
+      !avatarRef.current.contains(event.target as Node) // Kiểm tra avatarRef
     ) {
       setIsShowProfileDropdown(false); // Close the dropdown when clicking outside
     }

@@ -5,6 +5,8 @@ import signoutIcon from "../assets/home-icon/profile-dropdown-icon/sign-out.svg"
 import avatar from "../assets/home-icon/avatar-header.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { useUserStore } from "../stores/user";
+import Cookies from "js-cookie";
 
 type TProps = {
   isShowProfileDropdown: boolean;
@@ -17,9 +19,13 @@ export default function ProfileDropdown({
   setIsShowProfileDropdown,
   avatarRef,
 }: TProps) {
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const handleLogout = () => {
+    setUser(null);
+    Cookies.remove("accessToken");
     navigate("/login");
   };
   const handleClickOutside = (event: MouseEvent) => {
@@ -54,9 +60,9 @@ export default function ProfileDropdown({
           />
         </div>
         <div className="items-center">
-          <div className="font-bold text-lg leading-5">Anh Tuan</div>
+          <div className="font-bold text-lg leading-5">{ user?.userInfo.fullName }</div>
           <div className="truncate text-ellipsis overflow-hidden max-w-36 text-[#999999]">
-            animals26102002@gmail.com
+            { user?.userInfo.email}
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const location = useLocation();
-  const firstPathDetected = location.pathname.split('/');
+  const firstPathDetected = location.pathname;
   
   return (
     <div className="flex gap-3 bg-[##F6D0FF] items-center bg-[#F6D0FF] p-3 rounded-3xl lg:flex-col lg:gap-2">

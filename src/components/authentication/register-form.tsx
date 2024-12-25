@@ -29,15 +29,12 @@ export default function RegisterForm() {
   const navigate = useNavigate();
   const mutationFnRegister = async (
     data: TRegisterForm,
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    setIsLoading(true);
     const response = await registerUser({
       email: data.email,
       password: data.password,
       fullName: data.fullName,
     });
-    setIsLoading(false);
     return response;
   };
 
@@ -47,7 +44,7 @@ export default function RegisterForm() {
       navigate("/login");
     }
   };
-  const { mutate, isLoading } = useAuthentication({
+  const { mutate, isPending } = useAuthentication({
     mutationAuthFn: mutationFnRegister,
     onSuccessFn: onSuccessFn,
   });
@@ -108,15 +105,12 @@ export default function RegisterForm() {
             <button
               className={clsx(
                 "w-full min-h-10 text-white rounded-2xl font-semibold text-lg p-3 shadow-custom",
-                {
-                  "bg-gray-400 cursor-not-allowed": isLoading,
-                  "bg-[#1B53F4]": !isLoading,
-                }
+                isPending ? "bg-gray-400 cursor-not-allowed" : "bg-[#1B53F4]"
               )}
               type="submit"
-              disabled={isLoading}
+              disabled={isPending}
             >
-              {isLoading ? <LoadingInButton /> : "Register"}
+              {isPending ? <LoadingInButton /> : "Register"}
             </button>
           </div>
           <div className="text-center">

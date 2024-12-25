@@ -30,14 +30,11 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const mutationFnLogin = async (
     data: TLoginForm,
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    setIsLoading(true);
     const response = await login({
       email: data.email,
       password: data.password,
     });
-    setIsLoading(false);
     return response;
   };
 
@@ -50,7 +47,7 @@ export default function LoginForm() {
     }
   };
 
-  const { mutate, isLoading } = useAuthentication({
+  const { mutate, isPending } = useAuthentication({
     mutationAuthFn: mutationFnLogin,
     onSuccessFn: onSuccessFn,
   });
@@ -100,15 +97,12 @@ export default function LoginForm() {
           <button
             className={clsx(
               "w-full min-h-10 text-white rounded-2xl font-semibold text-lg p-3 shadow-custom",
-              {
-                "bg-gray-400 cursor-not-allowed": isLoading,
-                "bg-[#1B53F4]": !isLoading,
-              }
+              isPending ? "bg-gray-400 cursor-not-allowed" : "bg-[#1B53F4]"
             )}
             type="submit"
-            disabled={isLoading}
+            disabled={isPending}
           >
-            {isLoading ? <LoadingInButton /> : "Login"}
+            {isPending ? <LoadingInButton /> : "Login"}
           </button>
         </div>
         <div className="text-center">

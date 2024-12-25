@@ -40,17 +40,23 @@ export default function Header() {
           >
             <img src={avatar} alt="" />
             <div
-              className={clsx("absolute ml-2 w-4 h-4 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-200 cursor-pointer -bottom-1 -right-1 lg:w-5 lg:h-5 transition-transform duration-200 ease-in-out", {
-                "rotate-180": isShowProfileDropdown,
-                "rotate-0": !isShowProfileDropdown
-              })}
+              className={clsx(
+                "absolute ml-2 w-4 h-4 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-200 cursor-pointer -bottom-1 -right-1 lg:w-5 lg:h-5 transition-transform duration-200 ease-in-out",
+                isShowProfileDropdown ? "rotate-180" : "rotate-0"
+              )}
             >
               <img src={dropdownArrow} alt="" />
             </div>
           </div>
-          <AnimatePresence> 
+          <AnimatePresence>
             {isShowProfileDropdown && (
-              <motion.div key="modal" transition={{ duration: 0.2, ease: "linear" }} initial={{ opacity: 0 }} animate={{opacity: 1}} exit={{ opacity: 0 }}>
+              <motion.div
+                key="modal"
+                transition={{ duration: 0.2, ease: "linear" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
                 {
                   <ProfileDropdown
                     isShowProfileDropdown={isShowProfileDropdown}

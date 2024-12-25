@@ -1,9 +1,8 @@
 import loginSvg from "../assets/login.svg";
 import air from "../assets/air-plane.svg";
-import LoginForm from "../components/authentication/login-form";
+import RegisterForm from "../components/authentication/register-form";
 
-
-export default function Login() {
+export default function Register() {
   return (
     <div className="flex justify-center min-h-screen font-Nunito bg-login-bg bg-cover bg-center lg:bg-none">
       <div className="hidden lg:block w-1/2 bg-login-bg bg-cover bg-center py-28 pl-52 space-y-12">
@@ -27,7 +26,7 @@ export default function Login() {
       <div className="w-full border p-10 lg:w-1/2 lg:p-24 lg:bg-[#F6D0FF]">
         <div className="space-y-10 py-10  rounded-2xl lg:bg-white lg:px-32 lg:py-36 lg:h-full">
           <div className="font-bold text-3xl relative">
-            <div>Login</div>
+            <div>Register</div>
             <div className="absolute -top-16 right-0 lg:-top-28">
               <img
                 className="lg:w-[190px] lg:h-[210px]"
@@ -36,7 +35,7 @@ export default function Login() {
               />
             </div>
           </div>
-          <LoginForm />
+          <RegisterForm />
         </div>
       </div>
     </div>

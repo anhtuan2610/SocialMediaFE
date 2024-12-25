@@ -11,17 +11,18 @@ const ProtectedRoute = () => {
   const setUser = useUserStore((state) => state.setUser);
 
   const getUserInfo = async () => {
-    if (!accessToken) {
-      navigate("/login");
-      return;
-    }
-    try {      
-      if (!user) {
-        const response = await getLoggedInUserInfo();
-        if (response) {
-          const userData = response.data;
-          setUser(userData);
-        }
+    try {
+      if (!accessToken) {
+        navigate("/login");
+        return;
+      }
+      if (user) {
+        return;
+      }
+      const response = await getLoggedInUserInfo();
+      if (response) {
+        const userData = response.data;
+        setUser(userData);
       }
     } catch (error) {
       navigate("/login");

@@ -5,7 +5,7 @@ type TBaseResponse<T> = {
   data: T;
 };
 
-type TLoginResponse = TBaseResponse<TLoginResponseData>;
+export type TLoginResponse = TBaseResponse<TLoginResponseData>;
 
 type TLoginResponseData = {
   userInformation: {

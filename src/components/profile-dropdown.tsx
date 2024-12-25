@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useUserStore } from "../stores/user";
 import Cookies from "js-cookie";
+import clsx from "clsx";
 
 type TProps = {
   isShowProfileDropdown: boolean;
@@ -47,9 +48,13 @@ export default function ProfileDropdown({
   return (
     <div
       ref={dropdownRef}
-      className={`w-32 rounded-lg bg-white border shadow-md z-10 absolute right-0 top-12 px-2 py-1 text-xs font-semibold transition-opacity duration-300 cursor-default lg:w-56 lg:text-base lg:font-medium lg:shadow-lg lg:rounded-xl lg:px-3 lg:py-2 ${
-        isShowProfileDropdown ? "opacity-100 visible" : "opacity-0 invisible"
-      }`}
+      className={clsx(
+        "w-32 rounded-lg bg-white border shadow-md z-10 absolute right-0 top-12 px-2 py-1 text-xs font-semibold transition-opacity duration-300 cursor-default lg:w-56 lg:text-base lg:font-medium lg:shadow-lg lg:rounded-xl lg:px-3 lg:py-2",
+        {
+          "opacity-100 visible": isShowProfileDropdown,
+          "opacity-0 invisible": !isShowProfileDropdown,
+        }
+      )}
     >
       <div className="hidden lg:flex pb-2 items-center gap-2">
         <div>
@@ -60,9 +65,11 @@ export default function ProfileDropdown({
           />
         </div>
         <div className="items-center">
-          <div className="font-bold text-lg leading-5">{ user?.userInfo.fullName }</div>
+          <div className="font-bold text-lg leading-5">
+            {user?.userInfo.fullName}
+          </div>
           <div className="truncate text-ellipsis overflow-hidden max-w-36 text-[#999999]">
-            { user?.userInfo.email}
+            {user?.userInfo.email}
           </div>
         </div>
       </div>

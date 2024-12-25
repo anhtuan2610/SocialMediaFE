@@ -1,22 +1,22 @@
-import { get } from "./axios-config"
+import { get } from "./axios-config";
 
 type TBaseResponse<T> = {
-    message: string,
-    data: T
-}
+  message: string;
+  data: T;
+};
 
 type TUserInfoResponse = TBaseResponse<TUserInfoData>;
 
 export type TUserInfoData = {
-    userInfo: {
-        _id: number,
-        fullName: string,
-        email: string
-    }
-}
+  userInfo: {
+    _id: number;
+    fullName: string;
+    email: string;
+  };
+};
 
 export const getLoggedInUserInfo = async () => {
-    return await get<TUserInfoResponse>({
-        url: "/users/get-info",
-    })
-} 
+  return await get<TUserInfoResponse>({
+    url: "/users/get-info",
+  });
+};

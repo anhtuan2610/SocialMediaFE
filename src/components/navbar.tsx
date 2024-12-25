@@ -8,13 +8,13 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const location = useLocation();
-  const firstPathDetected = location.pathname.split('/')[1]; // ?
+  const firstPathDetected = location.pathname.split('/');
   
   return (
     <div className="flex gap-3 bg-[##F6D0FF] items-center bg-[#F6D0FF] p-3 rounded-3xl lg:flex-col lg:gap-2">
       <div
         className={`rounded-full p-1 lg:p-2 hover:bg-slate-300 ${
-          firstPathDetected == "home" && "bg-white"
+          firstPathDetected.includes("home") && "bg-white"
         }`}
       >
         <div className="w-10 lg:w-11">
@@ -25,7 +25,7 @@ export default function Navbar() {
       </div>
       <div
         className={`rounded-full p-1 lg:p-2 hover:bg-slate-300 ${
-          firstPathDetected == "messenger" && "bg-white"
+          firstPathDetected.includes("messenger") && "bg-white"
         }`}
       >
         <div className="w-10 lg:w-11">

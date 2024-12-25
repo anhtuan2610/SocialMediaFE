@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../../services/authentication-api";
 import LoadingInButton from "../loading-in-button";
-import { useState } from "react";
+import useAuthentication from "../../hooks/useAuthentication";
+import InputForm from "../input-form";
+import clsx from "clsx";
 
 type TRegisterForm = {
   email: string;
@@ -25,8 +26,32 @@ const schema = z.object({
 });
 
 export default function RegisterForm() {
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const mutationFnRegister = async (
+    data: TRegisterForm,
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    setIsLoading(true);
+    const response = await registerUser({
+      email: data.email,
+      password: data.password,
+      fullName: data.fullName,
+    });
+    setIsLoading(false);
+    return response;
+  };
+
+  const onSuccessFn = (response: any) => {
+    if (response) {
+      toast.success("Register Success !");
+      navigate("/login");
+    }
+  };
+  const { mutate, isLoading } = useAuthentication({
+    mutationAuthFn: mutationFnRegister,
+    onSuccessFn: onSuccessFn,
+  });
+
   const {
     register,
     handleSubmit,
@@ -41,29 +66,6 @@ export default function RegisterForm() {
     resolver: zodResolver(schema),
   });
 
-  const { mutate } = useMutation({
-    mutationKey: ["login"],
-    mutationFn: async (data: TRegisterForm) => {
-      setIsLoading(true);
-      const response = await registerUser({
-        email: data.email,
-        password: data.password,
-        fullName: data.fullName,
-      });
-      setIsLoading(false);
-      return response;
-    },
-    onSuccess: (response) => {
-      if (response) {
-        toast.success("Register Success !");
-        navigate("/login");
-      }
-    },
-    onError: (error) => {
-      toast.error(error.toString());
-    },
-  });
-
   const onSubmitHandle = (data: TRegisterForm) => {
     try {
       mutate(data);
@@ -73,58 +75,44 @@ export default function RegisterForm() {
   };
 
   return (
-    <div>
+    <>
       <form onSubmit={handleSubmit(onSubmitHandle)} className="space-y-6">
-        <div>
-          <label className="font-medium" htmlFor="fullName">
-            Full Name
-          </label>
-          <div className="relative">
-            <input
-              className="w-full min-h-10 bg-[#F2F6FB] rounded-3xl shadow-custom p-4 box-border"
-              type="fullName"
-              placeholder="Enter you full name"
-              {...register("fullName")}
-            />
-            <span className="text-red-700">{errors.fullName?.message}</span>
-          </div>
-        </div>
         <div className="space-y-5">
-          <div>
-            <label className="font-medium" htmlFor="">
-              E-mail
-            </label>
-            <input
-              className="w-full min-h-10 bg-[#F2F6FB] rounded-3xl shadow-custom p-4 box-border"
-              placeholder="Enter your email"
-              {...register("email")}
-            />
-            <span className="text-red-700">{errors.email?.message}</span>
-          </div>
-          <div className="">
-            <label className="font-medium" htmlFor="password">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                className="w-full min-h-10 bg-[#F2F6FB] rounded-3xl shadow-custom p-4 box-border"
-                type="password"
-                placeholder="Enter you password"
-                {...register("password")}
-              />
-              <span className="text-red-700">{errors.password?.message}</span>
-              <img
-                className="absolute top-1/2 -translate-y-1/2 right-4 "
-                src={eye}
-                alt=""
-              />
-            </div>
-          </div>
+          <InputForm
+            id="fullName"
+            labelName="Full Name"
+            type="text"
+            placeholder="Enter your full name"
+            register={register}
+            error={errors.fullName?.message}
+          />
+          <InputForm
+            id="email"
+            labelName="E-mail"
+            type="text"
+            placeholder="Enter your email"
+            register={register}
+            error={errors.email?.message}
+          />
+          <InputForm
+            id="password"
+            labelName="Password"
+            type="password"
+            placeholder="Enter your password"
+            register={register}
+            error={errors.password?.message}
+            icon={eye}
+          />
+
           <div className="pt-2">
             <button
-              className={`w-full min-h-10 text-white rounded-2xl font-semibold text-lg p-3 shadow-custom ${
-                isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-[#1B53F4]"
-              }`}
+              className={clsx(
+                "w-full min-h-10 text-white rounded-2xl font-semibold text-lg p-3 shadow-custom",
+                {
+                  "bg-gray-400 cursor-not-allowed": isLoading,
+                  "bg-[#1B53F4]": !isLoading,
+                }
+              )}
               type="submit"
               disabled={isLoading}
             >
@@ -141,6 +129,6 @@ export default function RegisterForm() {
           </div>
         </div>
       </form>
-    </div>
+    </>
   );
 }

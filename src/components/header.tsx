@@ -6,6 +6,7 @@ import dropdownArrow from "../assets/home-icon/dropdown-arrow.svg";
 import { useRef, useState } from "react";
 import ProfileDropdown from "./profile-dropdown";
 import { AnimatePresence, motion } from "motion/react";
+import clsx from "clsx";
 
 export default function Header() {
   const [isShowProfileDropdown, setIsShowProfileDropdown] = useState(false);
@@ -39,9 +40,10 @@ export default function Header() {
           >
             <img src={avatar} alt="" />
             <div
-              className={`absolute ml-2 w-4 h-4 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-200 cursor-pointer -bottom-1 -right-1 lg:w-5 lg:h-5 transition-transform duration-200 ease-in-out ${
-                isShowProfileDropdown ? "rotate-180" : "rotate-0"
-              }`}
+              className={clsx("absolute ml-2 w-4 h-4 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-200 cursor-pointer -bottom-1 -right-1 lg:w-5 lg:h-5 transition-transform duration-200 ease-in-out", {
+                "rotate-180": isShowProfileDropdown,
+                "rotate-0": !isShowProfileDropdown
+              })}
             >
               <img src={dropdownArrow} alt="" />
             </div>

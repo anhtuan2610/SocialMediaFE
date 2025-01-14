@@ -28,9 +28,7 @@ const schema = z.object({
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const mutationFnLogin = async (
-    data: TLoginForm,
-  ) => {
+  const mutationFnLogin = async (data: TLoginForm) => {
     const response = await login({
       email: data.email,
       password: data.password,

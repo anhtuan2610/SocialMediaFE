@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { TChatRoomData } from "../../types/chatRooms";
+import { TChatRoomData } from "../types/chatRooms";
 
 export const ChatRoomContext = createContext<{
   listChatRoom: TChatRoomData[];

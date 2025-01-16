@@ -7,7 +7,7 @@ import { createMessage } from "../../services/message-api";
 import { useUserStore } from "../../stores/user";
 import { useContext, useState } from "react";
 import { TMessageData } from "../../types/messages";
-import { ChatRoomContext } from "../context/chat-room-context";
+import { ChatRoomContext } from "../../context/chat-room-context";
 import LoadingInButton from "../loading-in-button";
 
 export default function MessageActionBar({

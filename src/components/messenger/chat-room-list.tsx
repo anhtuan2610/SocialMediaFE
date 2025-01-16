@@ -4,7 +4,7 @@ import camera from "../../assets/messenger-icon/camera.svg";
 import { getAllRoom } from "../../services/chat-room-api";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useContext } from "react";
-import { ChatRoomContext } from "../context/chat-room-context";
+import { ChatRoomContext } from "../../context/chat-room-context";
 
 export const ChatRoomList = ({
   userId,

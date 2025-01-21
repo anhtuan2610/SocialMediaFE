@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: "http://localhost:8080/api/",
   // baseURL: "https://socialmediabe-production.up.railway.app/",
   headers: {
     "Content-Type": "application/json",
@@ -10,7 +10,8 @@ const apiClient = axios.create({
   timeout: 3000,
 });
 
-apiClient.interceptors.response.use( // axios tự động parse kiểu json -> đối tượnng
+apiClient.interceptors.response.use(
+  // axios tự động parse kiểu json -> đối tượnng
   (response) => {
     // console.log(response.data);
     return response.data;
@@ -42,7 +43,9 @@ apiClient.interceptors.response.use( // axios tự động parse kiểu json -> 
       return Promise.reject(error.response.data);
     }
     if (error.request) {
-      return Promise.reject("Network Error: No response received from the server");
+      return Promise.reject(
+        "Network Error: No response received from the server"
+      );
     }
     // console.error("Error: ", error.message);
   }
@@ -62,7 +65,7 @@ apiClient.interceptors.request.use(
 
 // METHOD
 // hàm get có kiểu trả về là 1 promise dạng T* (T có thể là kiểu Product)
-export const get = <T,>({
+export const get = <T>({
   url,
   params,
   config, // một đối tượng chứa các tùy chọn khác liên quan đến yêu cầu.
@@ -78,7 +81,7 @@ export const get = <T,>({
     ...config,
   });
 
-export const post = <T,>({
+export const post = <T>({
   // Tránh xung đột cú pháp trong một số phiên bản cũ hơn của TypeScript (đặc biệt là với JSX sẽ bị nhầm lẫn cú pháp đây là thẻ).
   url,
   data,

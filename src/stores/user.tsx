@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { TUserInfoData } from "../services/users-api";
-
+import { TUserInfoData } from "../types/users";
 
 type TUserStore = {
   user: TUserInfoData | null;

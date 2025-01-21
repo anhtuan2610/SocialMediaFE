@@ -8,6 +8,7 @@ import { useEffect, useRef } from "react";
 import { useUserStore } from "../stores/user";
 import Cookies from "js-cookie";
 import clsx from "clsx";
+import { toast } from "sonner";
 
 type TProps = {
   isShowProfileDropdown: boolean;
@@ -80,7 +81,7 @@ export default function ProfileDropdown({
           <img className="lg:w-6 w-4" src={helpCenterIcon} alt="" />
           <p className=" text-nowrap">Help Center</p>
         </div>
-        <div className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-blue-100 lg:p-2 rounded-md">
+        <div className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-blue-100 lg:p-2 rounded-md" onClick={() => {toast.warning("Sorry this feature not done :(")}}>
           <img className="lg:w-6 w-4" src={darkModeIcon} alt="" />
           <p className=" text-nowrap">Dark Mode</p>
         </div>

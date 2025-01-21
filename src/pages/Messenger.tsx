@@ -13,26 +13,20 @@ export default function Messenger() {
   const socket = useContext(SocketContext);
   const [roomIdSelected, setRoomIdSelected] = useState<string | null>(null);
   const [listChatRoom, setListChatRoom] = useState<TChatRoomData[]>([]);
+  const [acceptJoinRoom, setAcceptJoinRoom] = useState(false);
   const isMobile = useDeviceType();
   useEffect(() => {
-    if (socket && listChatRoom.length > 0) {
+    if (socket && acceptJoinRoom) {
       const chatRoomIds = listChatRoom.map((chatRoom) => chatRoom._id);
-
       if (chatRoomIds.length > 0) {
+        console.log("join room");
         socket.emit("joinChatRooms", chatRoomIds);
-        const handleUserJoined = (data: { message: string }) => {
-          console.log(data.message);
-        };
-        socket.on("userJoined", handleUserJoined);
-        return () => {
-          socket.off("userJoined", handleUserJoined);
-        };
       }
     }
-  }, [socket, listChatRoom]); // Theo dõi cả socket và listChatRoom
+  }, [socket, acceptJoinRoom]); // Theo dõi cả socket và listChatRoom 
 
   return (
-    <ChatRoomContext.Provider value={{ listChatRoom, setListChatRoom }}>
+    <ChatRoomContext.Provider value={{ listChatRoom, setListChatRoom, setAcceptJoinRoom }}>
       <div className="flex cursor-default gap-10 relative">
         <div className="w-full lg:w-1/4 ">
           {user?.userInfo._id && (

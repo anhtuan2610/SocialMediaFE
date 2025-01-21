@@ -1,7 +1,7 @@
 import MessageList from "./message-list";
 import MessageActionBar from "./message-action-bar";
 import MessageHeader from "./message-header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TMessageData } from "../../types/messages";
 
 export default function RightSidebar({
@@ -13,8 +13,12 @@ export default function RightSidebar({
 }) {
   const [messageList, setMessageList] = useState<TMessageData[]>([]);
   const handleGoBack = () => {
+    setMessageList([]);
     setRoomIdSelected(null);
   };
+  useEffect(() => {
+    setMessageList([]);
+  }, [roomIdSelected])
 
   return (
     <div className="rounded-2xl overflow-hidden flex flex-col h-[780px] w-full op">

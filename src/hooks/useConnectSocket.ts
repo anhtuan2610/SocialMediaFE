@@ -6,12 +6,10 @@ const useSocket = (serverUrl: string) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
+    console.log("useSocket");
     const socket = io(serverUrl);
     socket.on("connection", () => {
-      console.log("Connected to server with id:", socket.id);
-    });
-    socket.on("welcome", (data) => {
-      console.log(data.message);
+      console.log("connection socket id: ", socket.id);
     });
     setSocket(socket);
 

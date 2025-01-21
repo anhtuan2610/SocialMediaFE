@@ -9,6 +9,7 @@ import { useContext, useState } from "react";
 import { TMessageData } from "../../types/messages";
 import { ChatRoomContext } from "../../context/chat-room-context";
 import LoadingInButton from "../loading-in-button";
+import { SocketContext } from "../../context/socket-context";
 
 export default function MessageActionBar({
   roomIdSelected,
@@ -18,6 +19,7 @@ export default function MessageActionBar({
   setMessageList: React.Dispatch<React.SetStateAction<TMessageData[]>>;
 }) {
   const user = useUserStore((state) => state.user);
+  const socket = useContext(SocketContext);
   const chatRoomDataContext = useContext(ChatRoomContext);
   const [newMessage, setNewMessage] = useState<string>("");
   const { isPending, mutate } = useMutation({
@@ -45,15 +47,18 @@ export default function MessageActionBar({
       const validate =
         user?.userInfo._id && newMessage.trim() !== "" && roomIdSelected;
       if (validate) {
-        return await createMessage({
+        await createMessage({
           senderId: user?.userInfo._id,
           content: newMessage,
           chatRoomId: roomIdSelected,
         });
+        if (socket) {
+          socket.emit("sendMessage", roomIdSelected, user.userInfo._id, newMessage)
+        }
       }
     },
   });
-  const handleCreateMessage = () => {
+  const handleCreateMessage = async () => {
     setMessageList((prev) => [
       ...prev,
       {

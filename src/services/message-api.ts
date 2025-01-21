@@ -1,9 +1,18 @@
 import { TMessageResponse } from "../types/messages";
 import { get, post } from "./axios-config";
 
-export const getAllMessageByRoomId = async ({ roomId }: { roomId: string }) => {
+export const getAllMessageByRoomId = async ({
+  roomId,
+  skipMessageCount,
+}: {
+  roomId: string;
+  skipMessageCount: number;
+}) => {
   return get<TMessageResponse>({
     url: `/messages/get-all-message/${roomId}`,
+    params: {
+      skipMessageCount,
+    },
   });
 };
 

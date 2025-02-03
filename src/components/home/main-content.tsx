@@ -1,4 +1,4 @@
-import PostList from "./post-list";
+import PostList from "./home-post";
 import StorysFeed from "./storys-feed";
 
 export default function MainContent() {

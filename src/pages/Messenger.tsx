@@ -27,7 +27,7 @@ export default function Messenger() {
 
   return (
     <ChatRoomContext.Provider value={{ listChatRoom, setListChatRoom, setAcceptJoinRoom }}>
-      <div className="flex cursor-default gap-10 relative">
+      <div className="flex cursor-default gap-10 relative px-1 pt-4 pb-20 lg:px-24">
         <div className="w-full lg:w-1/4 ">
           {user?.userInfo._id && (
             <LeftSidebar

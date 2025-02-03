@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createMessage } from "../../services/message-api";
 import { useUserStore } from "../../stores/user";
 import { useContext, useState } from "react";
-import { TMessageData } from "../../types/messages";
+import { TListMessages } from "../../types/messages";
 import { ChatRoomContext } from "../../context/chat-room-context";
 import LoadingInButton from "../loading-in-button";
 import { SocketContext } from "../../context/socket-context";
@@ -16,7 +16,7 @@ export default function MessageActionBar({
   setMessageList,
 }: {
   roomIdSelected: string;
-  setMessageList: React.Dispatch<React.SetStateAction<TMessageData[]>>;
+  setMessageList: React.Dispatch<React.SetStateAction<TListMessages[]>>;
 }) {
   const user = useUserStore((state) => state.user);
   const socket = useContext(SocketContext);

@@ -73,7 +73,7 @@ export default function ProfileDropdown({
       </div>
       <div className="hidden lg:block h-[1px] bg-gray-300 my-1"></div>
       <div>
-        <div className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-blue-100 lg:p-2 rounded-md">
+        <div className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-blue-100 lg:p-2 rounded-md" onClick={() => {navigate(`/profile/${user?.userInfo._id}`)}}>
           <img className="lg:w-6 w-4" src={profileSettingIcon} alt="" />
           <p className=" text-nowrap">Profile Settings</p>
         </div>

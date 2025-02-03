@@ -2,7 +2,7 @@ import MessageList from "./message-list";
 import MessageActionBar from "./message-action-bar";
 import MessageHeader from "./message-header";
 import { useEffect, useState } from "react";
-import { TMessageData } from "../../types/messages";
+import { TListMessages } from "../../types/messages";
 
 export default function RightSidebar({
   roomIdSelected,
@@ -11,7 +11,7 @@ export default function RightSidebar({
   roomIdSelected: string;
   setRoomIdSelected: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
-  const [messageList, setMessageList] = useState<TMessageData[]>([]);
+  const [messageList, setMessageList] = useState<TListMessages[]>([]);
   const handleGoBack = () => {
     setMessageList([]);
     setRoomIdSelected(null);

@@ -43,7 +43,7 @@ export default function ProfileDropdown({
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside); // không ảnh hướng đến logic chính , không cần quan tâm
     };
   }, []);
   return (
@@ -73,7 +73,12 @@ export default function ProfileDropdown({
       </div>
       <div className="hidden lg:block h-[1px] bg-gray-300 my-1"></div>
       <div>
-        <div className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-blue-100 lg:p-2 rounded-md" onClick={() => {navigate(`/profile/${user?.userInfo._id}`)}}>
+        <div
+          className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-blue-100 lg:p-2 rounded-md"
+          onClick={() => {
+            navigate(`/profile/${user?.userInfo._id}`);
+          }}
+        >
           <img className="lg:w-6 w-4" src={profileSettingIcon} alt="" />
           <p className=" text-nowrap">Profile Settings</p>
         </div>
@@ -81,7 +86,12 @@ export default function ProfileDropdown({
           <img className="lg:w-6 w-4" src={helpCenterIcon} alt="" />
           <p className=" text-nowrap">Help Center</p>
         </div>
-        <div className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-blue-100 lg:p-2 rounded-md" onClick={() => {toast.warning("Sorry this feature not done :(")}}>
+        <div
+          className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-blue-100 lg:p-2 rounded-md"
+          onClick={() => {
+            toast.warning("Sorry this feature not done :(");
+          }}
+        >
           <img className="lg:w-6 w-4" src={darkModeIcon} alt="" />
           <p className=" text-nowrap">Dark Mode</p>
         </div>

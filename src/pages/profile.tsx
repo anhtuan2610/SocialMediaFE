@@ -5,15 +5,21 @@ import ProfileStats from "../components/profile/profile-stats";
 import ListFriend from "../components/profile/list-friend";
 import ListGallery from "../components/profile/list-gallery";
 import ProfilePost from "../components/profile/profile-post";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProfileInfo } from "../services/users-api";
 import { useUserStore } from "../stores/user";
+import { AnimatePresence, motion } from "motion/react";
 import PostBox from "../components/profile/post-box";
+import { getChatRoomId } from "../services/chat-room-api";
+import { useEffect, useState } from "react";
+import SettingModal from "../components/profile/setting-modal";
 
 export default function Profile() {
   const user = useUserStore((state) => state.user);
+  const navigate = useNavigate();
   const { userId } = useParams();
+  const [isShowSettingModal, setIsShowSettingModal] = useState(false);
   const { data } = useQuery({
     queryKey: ["fetchProfileInfo", userId],
     queryFn: async () => {
@@ -23,6 +29,27 @@ export default function Profile() {
       }
     },
   });
+
+  const handleChatOnclick = async () => {
+    if (user?.userInfo._id && userId) {
+      const response = await getChatRoomId({
+        userId1: user?.userInfo._id,
+        userId2: userId,
+      });
+      if (response.data) {
+        const chatRoomId = response.data;
+        navigate(`/messenger/${chatRoomId}`);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (isShowSettingModal) {
+      document.body.classList.add("overflow-hidden"); // đang thêm class(thêm thuộc tính vào tailwind) overflow-hidden vào body (document đại diện toàn bộ trang, window -> document -> body)
+      return;
+    }
+    document.body.classList.remove("overflow-hidden");
+  }, [isShowSettingModal]);
 
   return (
     <div className="min-h-screen w-full relative">
@@ -55,7 +82,10 @@ export default function Profile() {
             </div>
             <div className="w-full flex gap-3">
               {userId === user?.userInfo._id ? (
-                <button className="bg-gray-800 font-bold text-xl text-white p-3 rounded-2xl flex-grow hover:bg-gray-700 hover:scale-105 transition-all duration-300 ease-in-out">
+                <button
+                  className="bg-gray-800 font-bold text-xl text-white p-3 rounded-2xl flex-grow hover:bg-gray-700 hover:scale-105 transition-all duration-300 ease-in-out"
+                  onClick={() => setIsShowSettingModal(true)}
+                >
                   Setting
                 </button>
               ) : (
@@ -64,7 +94,10 @@ export default function Profile() {
                 </button>
               )}
               {userId !== user?.userInfo._id && (
-                <button className="p-3 bg-[#E9E6F2] rounded-2xl">
+                <button
+                  className="p-3 bg-[#E9E6F2] rounded-2xl"
+                  onClick={handleChatOnclick}
+                >
                   <img
                     className="w-8 h-8 transform-gpu hover:scale-125 transition-all duration-300 ease-in-out"
                     src={air}
@@ -95,6 +128,19 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      <AnimatePresence>
+        {isShowSettingModal && (
+          <motion.div
+            key="modal"
+            transition={{ duration: 0.2, ease: "linear" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {<SettingModal setIsShowSettingModal={setIsShowSettingModal} />}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

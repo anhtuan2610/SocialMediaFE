@@ -35,7 +35,9 @@ export default function Post() {
         </div>
       </div>
       <div className="lg:px-3">
-        <span className="font-bold">Twin Bee 🐝</span> Ain't no mountain high enough, ain't no valley low enough, ain't no river wide enough, to keep me from getting to you babe.
+        <span className="font-bold">Twin Bee 🐝</span> Ain't no mountain high
+        enough, ain't no valley low enough, ain't no river wide enough, to keep
+        me from getting to you babe.
       </div>
     </div>
   );

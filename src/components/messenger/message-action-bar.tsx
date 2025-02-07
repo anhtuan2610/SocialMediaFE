@@ -5,11 +5,13 @@ import sendIcon from "../../assets/messenger-icon/send.svg";
 import { useMutation } from "@tanstack/react-query";
 import { createMessage } from "../../services/message-api";
 import { useUserStore } from "../../stores/user";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { TListMessages } from "../../types/messages";
 import { ChatRoomContext } from "../../context/chat-room-context";
 import LoadingInButton from "../loading-in-button";
 import { SocketContext } from "../../context/socket-context";
+import Picker from "@emoji-mart/react";
+import { useClickoutSide } from "../../hooks/useClickOutside";
 
 export default function MessageActionBar({
   roomIdSelected,
@@ -21,7 +23,10 @@ export default function MessageActionBar({
   const user = useUserStore((state) => state.user);
   const socket = useContext(SocketContext);
   const chatRoomDataContext = useContext(ChatRoomContext);
+  const emojiRef = useRef<HTMLDivElement>(null);
   const [newMessage, setNewMessage] = useState<string>("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
+
   const { isPending, mutate } = useMutation({
     mutationKey: ["createMessage"],
     mutationFn: async () => {
@@ -53,11 +58,17 @@ export default function MessageActionBar({
           chatRoomId: roomIdSelected,
         });
         if (socket) {
-          socket.emit("sendMessage", roomIdSelected, user.userInfo._id, newMessage)
+          socket.emit(
+            "sendMessage",
+            roomIdSelected,
+            user.userInfo._id,
+            newMessage
+          );
         }
       }
     },
   });
+
   const handleCreateMessage = async () => {
     setMessageList((prev) => [
       ...prev,
@@ -72,16 +83,35 @@ export default function MessageActionBar({
     ]);
     mutate();
   };
+
   const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !isPending && newMessage.trim() !== "") {
       handleCreateMessage();
     }
   };
+
+  const handleSelectEmoji = (emoji: any) => {
+    setNewMessage((prev) => prev + emoji.native);
+    setShowEmojiPicker(false); // Ẩn picker sau khi chọn emoji
+  };
+
+  useClickoutSide({ setState: setShowEmojiPicker, refElm: emojiRef });
+
   return (
     <div className="bg-[#FBDDDD] flex items-center p-3 px-6">
       <div className="flex items-center gap-6 w-full">
-        <div>
-          <img src={smileIcon} alt="" />
+        <div className="relative" ref={emojiRef}>
+          <img
+            src={smileIcon}
+            alt="emoji"
+            className="cursor-pointer"
+            onClick={() => setShowEmojiPicker((prev) => !prev)}
+          />
+          {showEmojiPicker && (
+            <div className="absolute bottom-full left-0 mb-2 z-10">
+              <Picker onEmojiSelect={handleSelectEmoji} theme="light" />
+            </div>
+          )}
         </div>
         <div>
           <img src={pinnedIcon} alt="" />

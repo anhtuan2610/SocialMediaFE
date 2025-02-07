@@ -20,7 +20,8 @@ export default function AppRouter() {
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
-          <Route path="/messenger" element={<Messenger />} />
+
+          <Route path="/messenger/:roomId?" element={<Messenger />} />
           <Route path="/profile/:userId" element={<Profile />} />
         </Route>
       </Route>

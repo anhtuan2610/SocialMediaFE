@@ -8,6 +8,7 @@ import { TListMessages } from "../../types/messages";
 import { SocketContext } from "../../context/socket-context";
 import Loading from "../loading";
 import { ChatRoomContext } from "../../context/chat-room-context";
+import bg from "../../assets/messenger-icon/background.png";
 
 export default function MessageList({
   roomIdSelected,
@@ -107,7 +108,7 @@ export default function MessageList({
     return () => {
       container?.removeEventListener("scroll", handleScroll);
       if (scrollTimeoutRef.current) {
-        // đoạn này chỉ là xóa timeout khi mà không dùng đến chức năng này nữa thôi (không ảnh hưởng đến logic chính)
+        // đoạn này chỉ là xóa timeout khi mà không dùng đến chức năng này nữa thôi (không ảnh hưởng đến logic chính, không cần quan tâm)
         clearTimeout(scrollTimeoutRef.current);
       }
     };
@@ -122,9 +123,9 @@ export default function MessageList({
         scrollTimeoutRef.current = window.setTimeout(() => {
           scrollTimeoutRef.current = null; // Reset timeout
         }, 2000);
-        console.log(
-          numberPageAvailableRef.current + " " + countPageRef.current
-        );
+        // console.log(
+        //   numberPageAvailableRef.current + " " + countPageRef.current
+        // );
 
         if (numberPageAvailableRef.current == countPageRef.current) {
           return;
@@ -137,8 +138,9 @@ export default function MessageList({
 
   return (
     <div
-      className="bg-message-bg flex-1 px-5 py-2 space-y-4 overflow-y-auto font-semibold"
+      className="flex-1 px-5 py-2 space-y-4 overflow-y-auto custom-scroll font-semibold"
       ref={scrollContainerRef}
+      style={{ backgroundImage: `url(${bg})` }}
     >
       {isFirstLoading ? (
         <div className="flex justify-center items-center w-full h-full">

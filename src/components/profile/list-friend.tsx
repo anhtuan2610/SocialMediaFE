@@ -13,6 +13,7 @@ export default function ListFriend() {
           .fill(null)
           .map(() => (
             <div className="flex-shrink-0">
+              {/* Phần tử sẽ không thu nhỏ, bất kể không gian trong container có hạn chế đến mức nào. */}
               <img
                 className="rounded-full w-14 h-14 object-cover"
                 src={avatar}

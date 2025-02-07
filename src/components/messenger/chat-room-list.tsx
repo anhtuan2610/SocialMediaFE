@@ -8,6 +8,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useContext, useEffect, useState } from "react";
 import { ChatRoomContext } from "../../context/chat-room-context";
 import { useDebounce } from "../../hooks/useDebounce";
+import { useNavigate } from "react-router-dom";
 
 export const ChatRoomList = ({
   userId,
@@ -15,13 +16,14 @@ export const ChatRoomList = ({
 }: {
   userId: string;
   setRoomIdSelected: React.Dispatch<React.SetStateAction<string | null>>;
-  }) => {
+}) => {
   const chatRoomDataContext = useContext(ChatRoomContext);
+  const navigate = useNavigate();
   const [searchString, setSearchString] = useState<string>("");
   const debounceString = useDebounce(searchString, 500);
   useEffect(() => {
     console.log(debounceString);
-  }, [debounceString])
+  }, [debounceString]);
   const { isLoading } = useQuery({
     queryKey: ["fetchAllChatRoom", userId, debounceString],
     queryFn: async () => {
@@ -96,7 +98,10 @@ export const ChatRoomList = ({
             <div
               key={chatRoom._id}
               className="flex items-center gap-3 p-1 rounded-xl hover:bg-slate-100 hover:cursor-pointer"
-              onClick={() => setRoomIdSelected(chatRoom._id)}
+              onClick={() => {
+                setRoomIdSelected(chatRoom._id);
+                navigate(`/messenger/${chatRoom._id}`, { replace: true });
+              }}
             >
               <div className="flex-shrink-0 rounded-full w-16 h-16">
                 <img

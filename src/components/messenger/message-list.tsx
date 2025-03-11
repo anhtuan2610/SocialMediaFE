@@ -4,10 +4,11 @@ import { useUserStore } from "../../stores/user";
 import { getAllMessageByRoomId } from "../../services/message-api";
 import hiIcon from "../../assets/messenger-icon/hi.svg";
 import { useContext, useEffect, useRef, useState } from "react";
-import { TMessageData } from "../../types/messages";
+import { TListMessages } from "../../types/messages";
 import { SocketContext } from "../../context/socket-context";
 import Loading from "../loading";
 import { ChatRoomContext } from "../../context/chat-room-context";
+import bg from "../../assets/messenger-icon/background.png";
 
 export default function MessageList({
   roomIdSelected,
@@ -15,24 +16,30 @@ export default function MessageList({
   setMessageList,
 }: {
   roomIdSelected: string;
-  messageList: TMessageData[];
-  setMessageList: React.Dispatch<React.SetStateAction<TMessageData[]>>;
+  messageList: TListMessages[];
+  setMessageList: React.Dispatch<React.SetStateAction<TListMessages[]>>;
 }) {
   const user = useUserStore((state) => state.user);
   const chatRoomDataContext = useContext(ChatRoomContext);
   const socket = useContext(SocketContext);
-  const [isFirstLoading, setIsFirstLoading] = useState(true);
+  const scrollTimeoutRef = useRef<number | null>(null);
+  const numberPageAvailableRef = useRef(0);
+  const countPageRef = useRef(0);
   const [countPage, setCountPage] = useState(0);
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
   const { isLoading } = useQuery({
     queryKey: ["fetchAllMessage", roomIdSelected, countPage],
     queryFn: async () => {
       const response = await getAllMessageByRoomId({
         roomId: roomIdSelected,
-        skipMessageCount: countPage * 10,
+        skipMessageCount: countPage * 15, // limit 15 bản ghi 1 page
       });
       setIsFirstLoading(false);
-      if (response.data && response.data.length > 0) {
-        setMessageList((prev) => [...response.data, ...prev]);
+      if (response.data.listMessages && response.data.listMessages.length > 0) {
+        setMessageList((prev) => [...response.data.listMessages, ...prev]);
+        numberPageAvailableRef.current = Math.floor(
+          response.data.totalMessage / 15
+        );
       }
       return response;
     },
@@ -89,28 +96,51 @@ export default function MessageList({
   }, [messageList]);
 
   useEffect(() => {
-    scrollContainerRef.current?.addEventListener("wheel", handleScroll); // dùng wheel thay vì scroll sẽ giúp khi lăn lên trên cùng vẫn chưa cập nhật lại data luôn mà phải lăn tiếp
-
-    return () => {
-      scrollContainerRef.current?.removeEventListener("wheel", handleScroll);
-    };
-  }, [countPage]);
+    setIsFirstLoading(true);
+    countPageRef.current = 0;
+    setCountPage(0);
+  }, [roomIdSelected]);
 
   useEffect(() => {
-    setIsFirstLoading(true);
-    setCountPage(0);
-  }, [roomIdSelected])
+    const container = scrollContainerRef.current;
+    container?.addEventListener("scroll", handleScroll);
+
+    return () => {
+      container?.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) {
+        // đoạn này chỉ là xóa timeout khi mà không dùng đến chức năng này nữa thôi (không ảnh hưởng đến logic chính, không cần quan tâm)
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleScroll = () => {
-    if (scrollContainerRef.current?.scrollTop == 0) { // Phát hiện xem người dùng đang cố cuộn lên (delta âm nghĩa là cuộn lên, delta dương nghĩa là cuộn xuống).
-      setCountPage(countPage + 1);
-    }    
+    if (scrollContainerRef.current?.scrollTop == 0) {
+      // Phát hiện xem người dùng đang cố cuộn lên (delta âm nghĩa là cuộn lên, delta dương nghĩa là cuộn xuống).
+      if (!scrollTimeoutRef.current) {
+        // mặc định khi vào hàm này hoặc lần đầu vào hàm này thì timeout sẽ là null -> chưa có timeout được set -> đặt timeout mới -> hết timeout thì cập nhật
+        // Đặt timeout
+        scrollTimeoutRef.current = window.setTimeout(() => {
+          scrollTimeoutRef.current = null; // Reset timeout
+        }, 2000);
+        // console.log(
+        //   numberPageAvailableRef.current + " " + countPageRef.current
+        // );
+
+        if (numberPageAvailableRef.current == countPageRef.current) {
+          return;
+        }
+        countPageRef.current += 1;
+        setCountPage(countPageRef.current);
+      }
+    }
   };
 
   return (
     <div
-      className="bg-message-bg flex-1 px-5 py-2 space-y-4 overflow-y-auto font-semibold"
+      className="flex-1 px-5 py-2 space-y-4 overflow-y-auto custom-scroll font-semibold"
       ref={scrollContainerRef}
+      style={{ backgroundImage: `url(${bg})` }}
     >
       {isFirstLoading ? (
         <div className="flex justify-center items-center w-full h-full">

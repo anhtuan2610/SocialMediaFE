@@ -23,9 +23,12 @@ export default function MessageHeader({
       const chatRoomName = response.data.members.filter(
         (member) => member._id != user?.userInfo._id
       )[0].fullName;
+      console.log(chatRoomName);
+
       response.data.name = chatRoomName;
       return response;
     },
+    enabled: !!user?.userInfo._id, // phải thêm userId vào vì tại là sợ userId chưa kịp fetch xong thì logic chứa thằng này bị null dẫn tới bị sai
   });
 
   return (

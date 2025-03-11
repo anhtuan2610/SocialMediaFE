@@ -11,7 +11,7 @@ export default function LeftSidebar({
 }) {
   return (
     <>
-      <div className="bg-white rounded-2xl py-6 lg:p-6 max-h-[740px] overflow-y-auto">
+      <div className="bg-white rounded-2xl py-6 lg:px-3 max-h-[740px] overflow-y-auto custom-scroll">
         <div className="flex justify-between items-end px-2">
           <div className="text-[#323746] text-2xl font-bold">Message</div>
           <div>

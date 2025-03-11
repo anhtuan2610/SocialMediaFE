@@ -7,10 +7,12 @@ import { useUserStore } from "../stores/user";
 import { ChatRoomContext } from "../context/chat-room-context";
 import { TChatRoomData } from "../types/chatRooms";
 import { SocketContext } from "../context/socket-context";
+import { useParams } from "react-router-dom";
 
 export default function Messenger() {
   const user = useUserStore((state) => state.user);
   const socket = useContext(SocketContext);
+  const { roomId } = useParams();
   const [roomIdSelected, setRoomIdSelected] = useState<string | null>(null);
   const [listChatRoom, setListChatRoom] = useState<TChatRoomData[]>([]);
   const [acceptJoinRoom, setAcceptJoinRoom] = useState(false);
@@ -23,11 +25,18 @@ export default function Messenger() {
         socket.emit("joinChatRooms", chatRoomIds);
       }
     }
-  }, [socket, acceptJoinRoom]); // Theo dõi cả socket và listChatRoom 
+  }, [socket, acceptJoinRoom]); // Theo dõi cả socket và listChatRoom
 
+  useEffect(() => {
+    if (roomId) {
+      setRoomIdSelected(roomId);
+    }
+  }, [roomId]);
   return (
-    <ChatRoomContext.Provider value={{ listChatRoom, setListChatRoom, setAcceptJoinRoom }}>
-      <div className="flex cursor-default gap-10 relative">
+    <ChatRoomContext.Provider
+      value={{ listChatRoom, setListChatRoom, setAcceptJoinRoom }}
+    >
+      <div className="flex cursor-default gap-10 relative px-1 pt-4 pb-20 lg:px-24">
         <div className="w-full lg:w-1/4 ">
           {user?.userInfo._id && (
             <LeftSidebar

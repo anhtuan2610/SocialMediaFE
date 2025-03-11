@@ -4,7 +4,7 @@ import RightSidebar from "../components/home/right-sidebar";
 
 export default function Home() {
   return (
-    <div className="flex justify-between lg:space-x-10 px-4">
+    <div className="flex justify-between lg:space-x-10 px-4 pt-4 lg:p-8 lg:px-24">
       <div className="w-1/4 hidden lg:block">
         <LeftSidebar />
       </div>

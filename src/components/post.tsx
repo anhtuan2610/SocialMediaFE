@@ -1,10 +1,10 @@
-import avatarStory1 from "../../assets/home-icon/avatar-story-1.png";
-import optionPost from "../../assets/home-icon/option-button-post.svg";
-import image1 from "../../assets/home-icon/post-image2.jpg";
-import likeButton from "../../assets/home-icon/like-button.svg";
-import commentButton from "../../assets/home-icon/comment-button.svg";
-import shareButton from "../../assets/home-icon/share-button.svg";
-import saveButton from "../../assets/home-icon/save-button.svg";
+import avatarStory1 from "../assets/home-icon/avatar-story-1.png";
+import optionPost from "../assets/home-icon/option-button-post.svg";
+import image1 from "../assets/home-icon/post-image2.jpg";
+import likeButton from "../assets/home-icon/like-button.svg";
+import commentButton from "../assets/home-icon/comment-button.svg";
+import shareButton from "../assets/home-icon/share-button.svg";
+import saveButton from "../assets/home-icon/save-button.svg";
 
 export default function Post() {
   return (
@@ -35,7 +35,9 @@ export default function Post() {
         </div>
       </div>
       <div className="lg:px-3">
-        <span className="font-bold">Twin Bee 🐝</span> Ain't no mountain high enough, ain't no valley low enough, ain't no river wide enough, to keep me from getting to you babe.
+        <span className="font-bold">Twin Bee 🐝</span> Ain't no mountain high
+        enough, ain't no valley low enough, ain't no river wide enough, to keep
+        me from getting to you babe.
       </div>
     </div>
   );

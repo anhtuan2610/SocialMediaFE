@@ -1,8 +1,9 @@
-import Post from "./post";
+import Post from "../post";
 
-export default function PostList() {
+export default function ProfilePost() {
   return (
     <div className="space-y-4">
+      <Post />
       <Post />
       <Post />
     </div>

@@ -7,13 +7,23 @@ import { useRef, useState } from "react";
 import ProfileDropdown from "./profile-dropdown";
 import { AnimatePresence, motion } from "motion/react";
 import clsx from "clsx";
+import GhostAnimation from "./ghost-animation";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [isShowProfileDropdown, setIsShowProfileDropdown] = useState(false);
   const avatarRef = useRef<HTMLDivElement>(null);
   return (
-    <div className="bg-white flex justify-between items-center p-3 lg:px-28 lg:justify-around">
-      <div className="text-3xl font-bold lg:text-4xl">Aatroxx.in</div>
+    <div className="bg-white flex justify-between items-center p-3 lg:px-28 lg:justify-around relative">
+      <div className="relative">
+        <div className="text-3xl font-bold lg:text-4xl cursor-default">
+          <Link to="/home">Leo.Messi</Link>
+        </div>
+        <div className="absolute -top-2 ">
+          <GhostAnimation />
+        </div>
+      </div>
+
       <div className="hidden w-full lg:flex lg:justify-center">
         <div className="w-2/3 relative">
           <input

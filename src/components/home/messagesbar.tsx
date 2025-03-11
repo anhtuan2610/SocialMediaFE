@@ -2,8 +2,13 @@ import messageIcon from "../../assets/home-icon/message-icon.svg";
 import searchIcon from "../../assets/home-icon/search2.svg";
 import searchOption from "../../assets/home-icon/search-option.svg";
 import avatarMessage2 from "../../assets/home-icon/mubark-image.jpg";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { useState } from "react";
+import { useTimeoutLoading } from "../../hooks/useTimeoutLoading";
 
 export default function Messagesbar() {
+  const [isLoading, setIsLoading] = useState(true);
+  useTimeoutLoading({ setIsLoading });
   return (
     <div className="bg-white rounded-2xl py-6 px-6">
       <div className="flex justify-between items-end n px-2">
@@ -44,7 +49,24 @@ export default function Messagesbar() {
         </div>
         <div className="border w-full mt-2"></div>
       </div>
-      <div className="px-6 mt-6 space-y-4">
+      {isLoading && (
+        <SkeletonTheme baseColor="#e0e0e0" highlightColor="#f5f5f5">
+          <div className="px-6 mt-6 space-y-4">
+            {Array(5)
+              .fill(null)
+              .map((_, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <Skeleton circle width={64} height={64} />
+                  <div className="flex-1 space-y-2">
+                    <Skeleton width="60%" height={20} />
+                    <Skeleton width="40%" height={20} />
+                  </div>
+                </div>
+              ))}
+          </div>
+        </SkeletonTheme>
+      )}
+      <div className={`px-6 mt-6 space-y-4 ${isLoading ? "hidden" : ""}`}>
         <div className="flex items-center gap-3">
           <div className="rounded-full w-16 h-16">
             <img
@@ -99,7 +121,11 @@ export default function Messagesbar() {
         </div>
         <div className="flex items-center gap-3">
           <div className="rounded-full w-16 h-16">
-            <img className="rounded-full w-16 h-16" src={avatarMessage2} alt="" />
+            <img
+              className="rounded-full w-16 h-16"
+              src={avatarMessage2}
+              alt=""
+            />
           </div>
           <div className="text-start">
             <div className="font-bold">Mubark Androz</div>

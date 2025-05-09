@@ -39,7 +39,7 @@ export default function StorysFeed() {
       >
         <div className="w-14 h-14 flex flex-col justify-center items-center gap-1 relative rounded-full lg:gap-2 lg:w-[5.5rem] lg:h-[5.5rem] flex-shrink-0">
           <img
-            className="w-full h-full object-cover rounded-full border-2 animate-borderColorChange"
+            className="w-full h-full object-cover rounded-full border-2 animate-borderColorChange aspect-square"
             src={avatarStory}
             alt=""
           />
@@ -50,7 +50,7 @@ export default function StorysFeed() {
         </div>
         <div className="w-14 h-14 flex flex-col justify-center items-center gap-1 lg:w-20 lg:h-20 flex-shrink-0">
           <img
-            className="w-full h-full rounded-full border-blue-400 border-2"
+            className="w-full h-full rounded-full border-blue-400 border-2 aspect-square"
             src={avatarStory1}
             alt=""
           />
@@ -58,7 +58,7 @@ export default function StorysFeed() {
         </div>
         <div className="w-14 h-14 flex flex-col justify-center items-center gap-1 lg:w-20 lg:h-20 flex-shrink-0">
           <img
-            className="w-full h-full rounded-full border-blue-400 border-2"
+            className="w-full h-full rounded-full border-blue-400 border-2 aspect-square"
             src={avatarStory2}
             alt=""
           />
@@ -66,7 +66,7 @@ export default function StorysFeed() {
         </div>
         <div className="w-14 h-14 flex flex-col justify-center items-center gap-1 lg:w-20 lg:h-20 flex-shrink-0">
           <img
-            className="w-full h-full rounded-full border-blue-400 border-2"
+            className="w-full h-full rounded-full border-blue-400 border-2 aspect-square"
             src={avatarStory3}
             alt=""
           />
@@ -74,7 +74,7 @@ export default function StorysFeed() {
         </div>
         <div className="w-14 h- flex flex-col justify-center items-center gap-1 lg:w-20 lg:h-20 flex-shrink-0">
           <img
-            className="w-full h-full rounded-full border-blue-400 border-2"
+            className="w-full h-full rounded-full border-blue-400 border-2 aspect-square"
             src={avatarStory4}
             alt=""
           />
@@ -82,7 +82,7 @@ export default function StorysFeed() {
         </div>
         <div className="w-14 h- flex flex-col justify-center items-center gap-1 lg:w-20 lg:h-20 flex-shrink-0">
           <img
-            className="w-full h-full rounded-full border-blue-400 border-2"
+            className="w-full h-full rounded-full border-blue-400 border-2 aspect-square"
             src={avatarStory2}
             alt=""
           />

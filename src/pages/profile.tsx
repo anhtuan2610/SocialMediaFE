@@ -64,11 +64,22 @@ export default function Profile() {
         <div className="flex justify-center ">
           <div className="relative flex flex-col justify-center items-center gap-3 bg-white w-full border-2 border-black p-6 rounded-3xl lg:w-1/3 lg:translate-y-1/2">
             <div className="absolute -top-[55px] border-[3px] border-white rounded-full shadow-lg">
-              <img
-                className="rounded-full w-24 h-24 object-cover border-2"
-                src={avatar}
-                alt="Profile Avatar"
-              />
+              {user?.userInfo.avatar ? (
+                <img
+                  className="rounded-full w-[4.75rem] h-[4.75rem] object-cover border-2 border-white"
+                  src={user?.userInfo.avatar.replace(
+                    "/upload/",
+                    "/upload/fl_progressive/"
+                  )}
+                  alt="Profile Avatar"
+                />
+              ) : (
+                <img
+                  className="rounded-full w-[4.75rem] h-[4.75rem] object-cover border-2 border-white"
+                  src={avatar}
+                  alt="Profile Avatar"
+                />
+              )}
             </div>
             <div className="text-center space-y-1 pt-6">
               <div className="font-bold text-xl">

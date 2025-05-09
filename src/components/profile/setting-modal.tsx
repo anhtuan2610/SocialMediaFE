@@ -1,12 +1,36 @@
+import { toast } from "sonner";
 import avatar from "../../assets/home-icon/mubark-image.jpg";
 import link from "../../assets/profile/link.svg";
 import mail from "../../assets/profile/mail-icon.svg";
+import { UploadType } from "../../enum";
+import { upLoadImage } from "../../services/upload-api";
+import { useUserStore } from "../../stores/user";
 
 export default function SettingModal({
   setIsShowSettingModal,
 }: {
   setIsShowSettingModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const user = useUserStore((state) => state.user);
+  const handleChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const image = e.target.files?.[0];
+    const type = UploadType.AVATAR;
+    if (user?.userInfo._id && image && type) {
+      try {
+        const body = new FormData();
+        body.append("id", user.userInfo._id);
+        body.append("type", type);
+        body.append("image", image);
+        const response = await upLoadImage({ body });
+        if (response) {
+          toast.success("Update avatar success !");
+        }
+      } catch (error) {
+        toast.error("Update avatar fail !");
+        window.location.reload();
+      }
+    }
+  };
   return (
     <div className="fixed inset-0 bg-[#89888b] bg-opacity-50 z-20 flex justify-center items-center">
       <div className="bg-white p-1 w-4/5 rounded-xl">
@@ -15,11 +39,22 @@ export default function SettingModal({
           style={{ borderRadius: "0.75rem 0.75rem 0 0" }}
         >
           <div className="absolute bottom-0 translate-y-1/2 left-2 border-[2px] border-white rounded-full shadow-lg">
-            <img
-              className="rounded-full w-[4.75rem] h-[4.75rem] object-cover border-2 border-white"
-              src={avatar}
-              alt="Profile Avatar"
-            />
+            {user?.userInfo.avatar ? (
+              <img
+                className="rounded-full w-[4.75rem] h-[4.75rem] object-cover border-2 border-white"
+                src={user?.userInfo.avatar.replace(
+                  "/upload/",
+                  "/upload/fl_progressive/"
+                )}
+                alt="Profile Avatar"
+              />
+            ) : (
+              <img
+                className="rounded-full w-[4.75rem] h-[4.75rem] object-cover border-2 border-white"
+                src={avatar}
+                alt="Profile Avatar"
+              />
+            )}
           </div>
         </div>
         <div className="p-4">
@@ -89,9 +124,19 @@ export default function SettingModal({
                   src={avatar}
                   alt="Profile Avatar"
                 />
-                <button className="p-1 px-2 border border-gray-300 rounded-md font-bold text-gray-700 hover:bg-gray-100">
+                <label
+                  htmlFor="changeImage"
+                  className="p-1 px-2 border border-gray-300 rounded-md font-bold text-gray-700 hover:bg-gray-100 cursor-pointer"
+                >
                   Change image
-                </button>
+                </label>
+                <input
+                  id="changeImage"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleChangeImage}
+                />
               </div>
             </div>
             <div className="h-[1px] bg-gray-200"></div>

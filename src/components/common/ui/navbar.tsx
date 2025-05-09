@@ -1,14 +1,14 @@
-import homeIcon from "../assets/nav-icon/home.svg";
-import profileIcon from "../assets/nav-icon/profile.svg";
-import messengerIcon from "../assets/nav-icon/messenger.svg";
-import notificationIcon from "../assets/nav-icon/friend.svg";
-import settingIcon from "../assets/nav-icon/setting.svg";
+import homeIcon from "../../../assets/nav-icon/home.svg";
+import profileIcon from "../../../assets/nav-icon/profile.svg";
+import messengerIcon from "../../../assets/nav-icon/messenger.svg";
+import notificationIcon from "../../../assets/nav-icon/friend.svg";
+import settingIcon from "../../../assets/nav-icon/setting.svg";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { useUserStore } from "../stores/user";
-import NotificationList from "./notification-list";
-import { useClickoutSide } from "../hooks/useClickOutside";
+import { useUserStore } from "../../../stores/user";
+import { useClickoutSide } from "../../../hooks/useClickOutside";
 import { AnimatePresence, motion } from "motion/react";
+import NotificationList from "./notification-list";
 
 export default function Navbar() {
   const user = useUserStore((state) => state.user);
@@ -20,7 +20,7 @@ export default function Navbar() {
   }, [location.pathname]);
   const [notificationOpen, setNotificationOpen] = useState(false);
 
-  useClickoutSide({ refElm: notificationRef, setState: setNotificationOpen });
+  useClickoutSide({ refElm: notificationRef, setState: setNotificationOpen }); // chỉ chạy sau khi component đã mount.
 
   return (
     <div className="flex gap-3 bg-[##F6D0FF] items-center bg-[#F6D0FF] p-3 rounded-3xl lg:flex-col lg:gap-2">

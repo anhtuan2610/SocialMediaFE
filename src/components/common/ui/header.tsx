@@ -1,14 +1,14 @@
-import addIcon from "../assets/home-icon/add-icon.svg";
-import videoIcon from "../assets/home-icon/video-icon.svg";
-import avatar from "../assets/home-icon/avatar-header.png";
-import search from "../assets/home-icon/search.svg";
-import dropdownArrow from "../assets/home-icon/dropdown-arrow.svg";
+import addIcon from "../../../assets/home-icon/add-icon.svg";
+import videoIcon from "../../../assets/home-icon/video-icon.svg";
+import avatar from "../../../assets/home-icon/avatar-header.png";
+import search from "../../../assets/home-icon/search.svg";
+import dropdownArrow from "../../../assets/home-icon/dropdown-arrow.svg";
 import { useRef, useState } from "react";
-import ProfileDropdown from "./profile-dropdown";
 import { AnimatePresence, motion } from "motion/react";
 import clsx from "clsx";
-import GhostAnimation from "./ghost-animation";
+import GhostAnimation from "../animate/ghost-animation";
 import { Link } from "react-router-dom";
+import ProfileDropdown from "./profile-dropdown";
 
 export default function Header() {
   const [isShowProfileDropdown, setIsShowProfileDropdown] = useState(false);

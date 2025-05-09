@@ -21,7 +21,7 @@ export default function Messenger() {
     if (socket && acceptJoinRoom) {
       const chatRoomIds = listChatRoom.map((chatRoom) => chatRoom._id);
       if (chatRoomIds.length > 0) {
-        console.log("join room");
+        // console.log("join room");
         socket.emit("joinChatRooms", chatRoomIds);
       }
     }

@@ -67,71 +67,23 @@ export default function Messagesbar() {
         </SkeletonTheme>
       )}
       <div className={`px-6 mt-6 space-y-4 ${isLoading ? "hidden" : ""}`}>
-        <div className="flex items-center gap-3">
-          <div className="rounded-full w-16 h-16">
-            <img
-              className="rounded-full w-16 h-16"
-              src={avatarMessage2}
-              alt=""
-            />
-          </div>
-          <div className="text-start">
-            <div className="font-bold">Mubark Androz</div>
-            <div className="text-sm text-gray-300">Active 16m ago</div>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="rounded-full w-16 h-16">
-            <img
-              className="rounded-full w-16 h-16"
-              src={avatarMessage2}
-              alt=""
-            />
-          </div>
-          <div className="text-start">
-            <div className="font-bold">Mubark Androz</div>
-            <div className="text-sm text-gray-300">Active 16m ago</div>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="rounded-full w-16 h-16">
-            <img
-              className="rounded-full w-16 h-16"
-              src={avatarMessage2}
-              alt=""
-            />
-          </div>
-          <div className="text-start">
-            <div className="font-bold">Mubark Androz</div>
-            <div className="text-sm text-gray-300">Active 16m ago</div>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="rounded-full w-16 h-16">
-            <img
-              className="rounded-full w-16 h-16"
-              src={avatarMessage2}
-              alt=""
-            />
-          </div>
-          <div className="text-start">
-            <div className="font-bold">Mubark Androz</div>
-            <div className="text-sm text-gray-300">Active 16m ago</div>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="rounded-full w-16 h-16">
-            <img
-              className="rounded-full w-16 h-16"
-              src={avatarMessage2}
-              alt=""
-            />
-          </div>
-          <div className="text-start">
-            <div className="font-bold">Mubark Androz</div>
-            <div className="text-sm text-gray-300">Active 16m ago</div>
-          </div>
-        </div>
+        {Array(5)
+          .fill(null)
+          .map(() => (
+            <div className="flex items-center gap-3">
+              <div className="rounded-full w-16 h-16">
+                <img
+                  className="rounded-full w-16 h-16"
+                  src={avatarMessage2}
+                  alt=""
+                />
+              </div>
+              <div className="text-start">
+                <div className="font-bold">Mubark Androz</div>
+                <div className="text-sm text-gray-300">Active 16m ago</div>
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );

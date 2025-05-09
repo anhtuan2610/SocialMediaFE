@@ -1,4 +1,4 @@
-import CountAnimation from "../count-animation";
+import CountAnimation from "../common/animate/count-animation";
 
 export default function ProfileStats() {
   return (

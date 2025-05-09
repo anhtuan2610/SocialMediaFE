@@ -5,9 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { registerUser } from "../../services/authentication-api";
-import LoadingInButton from "../loading-in-button";
+import LoadingInButton from "../common/animate/loading-in-button";
 import useAuthentication from "../../hooks/useAuthentication";
-import InputForm from "../input-form";
+import InputForm from "../form/input-form";
 import clsx from "clsx";
 
 type TRegisterForm = {
@@ -27,9 +27,7 @@ const schema = z.object({
 
 export default function RegisterForm() {
   const navigate = useNavigate();
-  const mutationFnRegister = async (
-    data: TRegisterForm,
-  ) => {
+  const mutationFnRegister = async (data: TRegisterForm) => {
     const response = await registerUser({
       email: data.email,
       password: data.password,

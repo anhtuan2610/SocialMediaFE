@@ -28,7 +28,6 @@ export default function MessageHeader({
       response.data.name = chatRoomName;
       return response;
     },
-    enabled: !!user?.userInfo._id, // phải thêm userId vào vì tại là sợ userId chưa kịp fetch xong thì logic chứa thằng này bị null dẫn tới bị sai
   });
 
   return (

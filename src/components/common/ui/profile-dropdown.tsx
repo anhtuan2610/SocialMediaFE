@@ -1,11 +1,11 @@
-import profileSettingIcon from "../assets/home-icon/profile-dropdown-icon/profile-setting.svg";
-import helpCenterIcon from "../assets/home-icon/profile-dropdown-icon/help-center.svg";
-import darkModeIcon from "../assets/home-icon/profile-dropdown-icon/dark-mode.svg";
-import signoutIcon from "../assets/home-icon/profile-dropdown-icon/sign-out.svg";
-import avatar from "../assets/home-icon/avatar-header.png";
+import profileSettingIcon from "../../../assets/home-icon/profile-dropdown-icon/profile-setting.svg";
+import helpCenterIcon from "../../../assets/home-icon/profile-dropdown-icon/help-center.svg";
+import darkModeIcon from "../../../assets/home-icon/profile-dropdown-icon/dark-mode.svg";
+import signoutIcon from "../../../assets/home-icon/profile-dropdown-icon/sign-out.svg";
+import avatar from "../../../assets/home-icon/avatar-header.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../../../stores/user";
 import Cookies from "js-cookie";
 import clsx from "clsx";
 import { toast } from "sonner";

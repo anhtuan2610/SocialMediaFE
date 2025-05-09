@@ -6,7 +6,7 @@ import hiIcon from "../../assets/messenger-icon/hi.svg";
 import { useContext, useEffect, useRef, useState } from "react";
 import { TListMessages } from "../../types/messages";
 import { SocketContext } from "../../context/socket-context";
-import Loading from "../loading";
+import Loading from "../common/animate/loading";
 import { ChatRoomContext } from "../../context/chat-room-context";
 import bg from "../../assets/messenger-icon/background.png";
 
@@ -143,7 +143,7 @@ export default function MessageList({
       style={{ backgroundImage: `url(${bg})` }}
     >
       {isFirstLoading ? (
-        <div className="flex justify-center items-center w-full h-full">
+        <div className="flex justify-center items-center w-f  ull h-full">
           <div className="">
             <Loading width={16} height={16} />
           </div>

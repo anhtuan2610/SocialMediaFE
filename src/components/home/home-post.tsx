@@ -1,4 +1,4 @@
-import Post from "../post";
+import Post from "../common/ui/post";
 
 export default function PostList() {
   return (

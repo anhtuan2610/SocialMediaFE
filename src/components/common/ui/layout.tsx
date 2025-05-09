@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 import Header from "./header";
 import Navbar from "./navbar";
-import { SocketContext } from "../context/socket-context";
-import useSocket from "../hooks/useConnectSocket";
+import { SocketContext } from "../../../context/socket-context";
+import useSocket from "../../../hooks/useConnectSocket";
+import ChatbotWinDow from "./chatbot-window";
 
 export default function Layout() {
   const socket = useSocket("http://localhost:8080");
@@ -19,6 +20,9 @@ export default function Layout() {
         <main className="flex-grow bg-[#F3F5F7]">
           <Outlet /> {/* Render nội dung trang con ở đây */}
         </main>
+        <div className="fixed bottom-6 right-8">
+          <ChatbotWinDow />
+        </div>
       </SocketContext.Provider>
     </div>
   );

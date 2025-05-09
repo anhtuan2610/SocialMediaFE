@@ -6,11 +6,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
-import LoadingInButton from "../loading-in-button";
+import LoadingInButton from "../common/animate/loading-in-button";
 import useAuthentication from "../../hooks/useAuthentication";
 import { login, TLoginResponse } from "../../services/authentication-api";
 import Cookies from "js-cookie";
-import InputForm from "../input-form";
+import InputForm from "../form/input-form";
 import clsx from "clsx";
 
 type TLoginForm = {

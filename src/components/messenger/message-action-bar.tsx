@@ -8,7 +8,7 @@ import { useUserStore } from "../../stores/user";
 import { useContext, useRef, useState } from "react";
 import { TListMessages } from "../../types/messages";
 import { ChatRoomContext } from "../../context/chat-room-context";
-import LoadingInButton from "../loading-in-button";
+import LoadingInButton from "../common/animate/loading-in-button";
 import { SocketContext } from "../../context/socket-context";
 import Picker from "@emoji-mart/react";
 import { useClickoutSide } from "../../hooks/useClickOutside";
